@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resident Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <header class="bar">
+      <div>
+        <strong>{{ user.name }}</strong>
+        <div class="muted">{{ user.building }} • Floor {{ user.floor }} • Flat {{ user.flat }}</div>
+      </div>
+      <nav><a class="btn" href="{{ url_for('logout') }}">Logout</a></nav>
+      <a class="btn" href="{{ url_for('admin_home') }}"> Admin Preview</a>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash">
+        {% for category, message in messages %}
+          <div class="flash-item {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% endwith %}
+
+    <h2>Book a Service</h2>
+    <div class="grid cards">
+      {% for s in services %}
+      <div class="card">
+        <h3>{{ s.icon }} {{ s.name }}</h3>
+        <p class="muted">{{ s.desc }}</p>
+
+        <form method="POST" action="{{ url_for('book') }}" class="service-form">
+          <input type="hidden" name="service_key" value="{{ s.key }}" />
+          <input type="date" name="date" min="{{ today }}" required />
+          <select name="time" required>
+            <option value="">Time slot</option>
+            {% for t in time_slots %}<option value="{{ t }}">{{ t }}</option>{% endfor %}
+          </select>
+          <button class="btn primary" type="submit">Book</button>
+          <textarea name="notes" class="notes" rows="3"
+            placeholder="Describe the issue (e.g., kitchen sink leaking, AC not cooling, preferred time window)..."></textarea>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+
+    <h2>Your Requests</h2>
+    {% if bookings %}
+      <table class="table">
+        <thead><tr><th>ID</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          {% for b in bookings %}
+          <tr>
+            <td>{{ b.id }}</td>
+            <td>{{ b.service_name }}</td>
+            <td>{{ b.date }}</td>
+            <td>{{ b.time }}</td>
+            <td><span class="chip">{{ b.status }}</span></td>
+            <td>{{ b.notes }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="muted">No bookings yet. Choose a service above to get started.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

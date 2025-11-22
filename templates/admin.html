@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin • Bookings</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <header class="bar">
+      <h1 style="margin:0;">Admin Preview</h1>
+      <form method="POST" action="{{ url_for('admin_logout') }}">
+        <button class="btn" type="submit">Logout Admin</button>
+      </form>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash">
+        {% for category, message in messages %}
+          <div class="flash-item {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% endwith %}
+
+    {% if rows %}
+      <div class="card">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Resident</th>
+              <th>Unit</th>
+              <th>Service</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th style="width:240px;">Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in rows %}
+            <tr>
+              <td>{{ r.id }}</td>
+              <td>
+                <strong>{{ r.resident_name }}</strong><br>
+                <span class="muted">{{ r.resident_id }}</span>
+              </td>
+              <td>{{ r.building }} • {{ r.flat }}</td>
+              <td>{{ r.service }}</td>
+              <td>{{ r.date }}</td>
+              <td>{{ r.time }}</td>
+              <td><span class="chip">{{ r.status }}</span></td>
+              <td>
+                <form method="POST" action="{{ url_for('admin_update_status', bid=r.id) }}" class="grid-2">
+                  <select name="status" required>
+                    {% for s in statuses %}
+                      <option value="{{ s }}" {% if s==r.status %}selected{% endif %}>{{ s }}</option>
+                    {% endfor %}
+                  </select>
+                  <button class="btn primary" type="submit">Update</button>
+                </form>
+                {% if r.notes %}
+                  <div class="muted" style="margin-top:6px; font-size:12px;">📝 {{ r.notes }}</div>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="muted">No bookings yet.</p>
+    {% endif %}
+
+    <p style="margin-top:16px;">
+      <a class="btn" href="{{ url_for('dashboard') }}">Back to Resident</a>
+    </p>
+  </div>
+</body>
+</html>

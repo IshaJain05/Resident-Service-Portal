@@ -1,0 +1,122 @@
+:root{
+  --bg:#0b0d12; --card:#11141a; --text:#f5f7fa; --muted:#9aa4b2;
+  --primary:#6aa2ff; --border:#1d2230; --success:#24cba2; --error:#ff6b6b; --info:#7aa2ff;
+}
+*{box-sizing:border-box}
+body{margin:0; font-family:Inter,system-ui,Segoe UI,Arial; color:var(--text); background:linear-gradient(180deg,#07090e,#0b0d12 30%) fixed;}
+a{color:var(--primary); text-decoration:none}
+.container{max-width:1100px; margin:32px auto; padding:0 16px}
+.container.narrow{max-width:760px}
+header .logo{font-size:32px}
+h1,h2,h3{margin:8px 0 12px}
+.muted{color:var(--muted)}
+.center{text-align:center}
+
+/* Card */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px 22px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  overflow:hidden;
+  min-height:220px;
+}
+
+/* Grid */
+.grid{display:grid; gap:24px}
+.grid.cards{grid-template-columns:repeat(auto-fit, minmax(360px, 1fr))}
+
+label{display:block; font-size:14px; color:var(--muted); margin-bottom:8px}
+input, select, textarea{
+  width:100%; background:#0d1117; color:var(--text); border:1px solid var(--border);
+  padding:10px 12px; border-radius:10px; outline:none;
+}
+input:focus, select:focus, textarea:focus{border-color:#2a3348}
+
+.btn{display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid var(--border); color:var(--text); background:#0e1218; cursor:pointer}
+.btn.primary{background:linear-gradient(180deg,#3e79ff,#1e4ed8); border:none}
+.btn:hover{opacity:.95}
+
+.bar{display:flex; align-items:center; justify-content:space-between}
+
+/* ---------------- SERVICE FORM (single source of truth) ---------------- */
+/* Desktop: first row (date | time | Book), second row (notes full width) */
+.service-form{
+  display:grid;
+  margin-top:12px;
+  gap:10px;
+  align-items:center;
+  grid-template-columns: minmax(140px,1fr) minmax(140px,1fr) auto;
+  grid-template-areas:
+    "date time button"
+    "notes notes notes";
+}
+.service-form > *{min-width:0;}      /* prevent children from forcing overflow */
+.card{overflow:hidden;}              /* clamp any odd overflow */
+
+/* Uniform control sizing */
+.service-form input[type="date"],
+.service-form select,
+.service-form button{
+  height:40px; line-height:40px; padding:0 12px; border-radius:10px;
+}
+
+/* Date field */
+.service-form input[type="date"]{ grid-area:date; text-align:center; }
+input[type="date"]::-webkit-calendar-picker-indicator{ filter:invert(1); opacity:.85; cursor:pointer; }
+
+/* Time select */
+.service-form select{ grid-area:time; }
+
+/* Book button */
+.service-form button{
+  grid-area:button; justify-self:end; white-space:nowrap; max-width:100%;
+}
+
+/* Big descriptive notes box */
+.service-form .notes{
+  grid-area:notes;
+  min-height:100px;
+  padding:12px 14px;
+  border-radius:10px;
+  resize:vertical;
+  font-family:inherit; line-height:1.35;
+}
+
+/* Tablet: 2 cols, button below; still no overflow */
+@media (max-width:1024px){
+  .service-form{
+    grid-template-columns:1fr 1fr;
+    grid-template-areas:
+      "date time"
+      "notes notes"
+      "button button";
+  }
+  .service-form button{ justify-self:start; }
+}
+
+/* Mobile: single column stack */
+@media (max-width:640px){
+  .service-form{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "date"
+      "time"
+      "notes"
+      "button";
+  }
+}
+
+/* Table + chips + flashes */
+.table{width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden}
+.table th,.table td{border-bottom:1px solid var(--border); padding:12px; text-align:left; font-size:14px}
+.chip{background:#152238; color:#a6c4ff; padding:4px 10px; border-radius:999px; border:1px solid var(--border)}
+.flash{margin:12px 0}
+.flash-item{padding:10px 12px; border-radius:10px; margin-bottom:8px; border:1px solid var(--border)}
+.flash-item.success{background:#0d1a16; color:#c7ffee; border-color:#15382f}
+.flash-item.error{background:#1b1010; color:#ffd2d2; border-color:#3a2020}
+.flash-item.info{background:#101727; color:#dbe6ff; border-color:#1b2b4f}
+
+/*admin dashboard*/
+.grid-2{display:grid; gap:8px; grid-template-columns:1fr auto}

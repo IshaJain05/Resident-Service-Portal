@@ -1,0 +1,29 @@
+[
+  {
+    "resident_id": "ABC-F1-567",
+    "name": "Ravi Kumar",
+    "building": "ABC",
+    "floor": "1",
+    "flat": "567",
+    "phone": "9876543210",
+    "password": "pass123"
+  },
+  {
+    "resident_id": "ABC-F2-432",
+    "name": "Priya Sharma",
+    "building": "ABC",
+    "floor": "2",
+    "flat": "432",
+    "phone": "9123456789",
+    "password": "welcome"
+  },
+  {
+    "resident_id": "BLM-F3-210",
+    "name": "Aman Verma",
+    "building": "BLM",
+    "floor": "3",
+    "flat": "210",
+    "phone": "9811122233",
+    "password": "123456"
+  }
+]

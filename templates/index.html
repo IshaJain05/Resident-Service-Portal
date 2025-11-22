@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resident Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="container narrow">
+    <header>
+      <div class="logo">🏢</div>
+      <h1>Resident Login</h1>
+      <p class="muted">Enter your Resident ID and password to continue.</p>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash">
+          {% for category, message in messages %}
+            <div class="flash-item {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% endwith %}
+    </header>
+
+    <div class="card">
+      <form class="form-grid" method="POST" action="{{ url_for('login') }}">
+        <div class="grid-2">
+          <label>Resident ID
+            <input name="resident_id" placeholder="e.g., ABC-F1-567" required />
+          </label>
+          <label>Password
+            <input type="password" name="password" placeholder="Enter password" required />
+          </label>
+        </div>
+        <button class="btn primary" type="submit">Login</button>
+      </form>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3>Forgot Password?</h3>
+      <p class="muted">Reset with your Resident ID + registered phone.</p>
+      <form class="form-grid" method="POST" action="{{ url_for('reset_password') }}">
+        <div class="grid-2">
+          <label>Resident ID
+            <input name="resident_id_reset" placeholder="e.g., ABC-F1-567" required />
+          </label>
+          <label>Phone
+            <input name="phone_reset" pattern="\d{10}" placeholder="10-digit phone" required />
+          </label>
+        </div>
+        <button class="btn" type="submit">Reset Password</button>
+      </form>
+      <p class="muted" style="margin-top:8px;">For demo only: the temporary password will be shown above.</p>
+    </div>
+
+    <footer class="muted center">Private module • Admin-controlled access</footer>
+  </div>
+</body>
+</html>

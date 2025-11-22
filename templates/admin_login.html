@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="container narrow">
+    <h1>Admin Preview</h1>
+    <p class="muted">Demo-only admin access to view and update bookings.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash">
+        {% for category, message in messages %}
+          <div class="flash-item {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="card">
+      <form method="POST" action="{{ url_for('admin_login') }}" class="grid-2">
+        <label>Admin Password
+          <input type="password" name="password" placeholder="demo: admin123" required />
+        </label>
+        <div style="align-self:end;">
+          <button class="btn primary" type="submit">Login</button>
+          <a class="btn" href="{{ url_for('dashboard') }}">Back to Resident</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
