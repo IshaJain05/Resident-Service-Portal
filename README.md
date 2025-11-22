@@ -59,11 +59,33 @@ Static folder contains
 
 * style.css stylesheet  
 
-## How to run this project
+## How the system works
 
-### Install dependencies
+* Resident logs in with a resident ID from the JSON file
+* Dashboard shows service categories with icons
+* Resident selects a service and chooses a date
+* Booking is created and stored in memory
+* Admin logs in and views all bookings for monitoring
 
-Use your existing virtual environment or create a new one then run
+## Customization options
 
-```bash
-pip install -r requirements.txt
+* You can modify this project easily according to personal or client requirements
+* Replace residents.json with real structured data
+* Add more services and icons
+* Save bookings in a database
+* Add booking status such as pending or completed
+* Add technician panel for job updates
+* Improve UI with modern components
+* Add notification systems such as email or SMS alerts
+
+## Future enhancements
+
+* Full database integration
+* Role based authentication
+* Multi building support
+* Report generation for monthly maintenance
+* Mobile friendly design improvements
+
+## About this project
+This project is built for learning and demonstration.
+It helps students and developers understand basic authentication, form handling, and admin management using Flask.
